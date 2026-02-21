@@ -6,7 +6,6 @@ ScreenGui.Parent = Player:WaitForChild("PlayerGui")
 
 local selectedRemote = nil
 
--- ANA PANEL
 local Main = Instance.new("Frame")
 Main.Size = UDim2.new(0, 800, 0, 500)
 Main.Position = UDim2.new(0.5, -400, 0.5, -250)
@@ -16,7 +15,6 @@ Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
 
--- ÜST ŞERİT
 local TopBar = Instance.new("Frame")
 TopBar.Size = UDim2.new(1, 0, 0, 30)
 TopBar.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
@@ -30,7 +28,6 @@ Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.BackgroundTransparency = 1
 Title.Parent = TopBar
 
--- EPIC FACE (Zirve Noktası)
 local Logo = Instance.new("ImageLabel")
 Logo.Size = UDim2.new(0, 65, 0, 65)
 Logo.Position = UDim2.new(0.5, -32, 0, -18)
@@ -39,9 +36,7 @@ Logo.BackgroundTransparency = 1
 Logo.ZIndex = 15
 Logo.Parent = Main
 
----------------------------------------------------------
--- KOD EDİTÖRÜ & LOG
----------------------------------------------------------
+
 local Editor = Instance.new("TextBox")
 Editor.Size = UDim2.new(0, 340, 0, 280)
 Editor.Position = UDim2.new(0.02, 0, 0.1, 0)
@@ -63,9 +58,7 @@ Logs.TextSize = 12
 Logs.TextWrapped = true
 Logs.Parent = Main
 
----------------------------------------------------------
--- 4'LÜ PANEL SİSTEMİ (TABLI YAPI)
----------------------------------------------------------
+
 
 local function createPanel(title, xPos)
     local f = Instance.new("Frame")
@@ -112,7 +105,6 @@ for name, code in pairs(sList) do
     b.MouseButton1Click:Connect(function() Editor.Text = code end)
 end
 
--- 2. MODULE HUB (Popüler Arka Kapı Modülleri)
 local mList = {
     ["UTG Admin"] = "3425032542",
     ["Kohls Admin"] = "3239236979",
@@ -129,7 +121,7 @@ for name, id in pairs(mList) do
     b.MouseButton1Click:Connect(function() Editor.Text = id end)
 end
 
--- 3. REMOTE SCANNER
+
 local function scan()
     for _, child in pairs(RemoteHub:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
     for _, v in pairs(game:GetDescendants()) do
@@ -146,9 +138,7 @@ local function scan()
     end
 end
 
----------------------------------------------------------
--- AKSİYON BUTONLARI (Alt Bölge)
----------------------------------------------------------
+
 local function createAction(t, x, color)
     local b = Instance.new("TextButton")
     b.Size = UDim2.new(0, 105, 0, 40)
@@ -165,7 +155,7 @@ local RequireSS = createAction("REQUIRE ID", 0.16, Color3.fromRGB(180, 255, 180)
 local FuzzBtn = createAction("AUTO FUZZ", 0.3, Color3.fromRGB(200, 200, 255))
 local Refresh = createAction("REFRESH", 0.3, 0.82)
 
--- MANTIKSAL İŞLEMLER
+
 RemoteExec.MouseButton1Click:Connect(function()
     if selectedRemote then
         selectedRemote:FireServer(Editor.Text)
@@ -185,7 +175,7 @@ RequireSS.MouseButton1Click:Connect(function()
     end
 end)
 
--- AUTO FUZZER (Remote'un hangi argümanla çalıştığını bulmaya çalışır)
+
 FuzzBtn.MouseButton1Click:Connect(function()
     if selectedRemote then
         Logs.Text = "[FUZZING]: Trying common patterns..."
@@ -205,9 +195,7 @@ Logo.BackgroundTransparency = 1
 Logo.ZIndex = 5
 Logo.Parent = Main
 
----------------------------------------------------------
--- SOL TARAF: KOD EDİTÖRÜ & LOGS
----------------------------------------------------------
+
 local EditorScroll = Instance.new("ScrollingFrame")
 EditorScroll.Size = UDim2.new(0, 420, 0, 230)
 EditorScroll.Position = UDim2.new(0.02, 0, 0.1, 0)
@@ -246,9 +234,7 @@ Logs.TextSize = 12
 Logs.TextWrapped = true
 Logs.Parent = LogScroll
 
----------------------------------------------------------
--- SAĞ TARAF: SCRIPT HUB (GENİŞLETİLMİŞ)
----------------------------------------------------------
+
 local ScriptSection = Instance.new("Frame")
 ScriptSection.Size = UDim2.new(0, 220, 0, 350)
 ScriptSection.Position = UDim2.new(0.65, 0, 0.1, 0)
@@ -275,7 +261,7 @@ local SList = Instance.new("UIListLayout")
 SList.Padding = UDim.new(0, 2)
 SList.Parent = ScriptScroll
 
--- SCRIPT KÜTÜPHANESİ (RC7 DAHİL)
+
 local ScriptLibrary = {
 	["RC7 (GUI)"] = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/CoreGui/Scripts/main/RC7"))()',
 	["Infinite Yield"] = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()',
@@ -307,9 +293,7 @@ for name, code in pairs(ScriptLibrary) do
 	end)
 end
 
----------------------------------------------------------
--- BUTONLAR & FONKSİYONLAR
----------------------------------------------------------
+
 local function createBtn(name, xPos)
 	local b = Instance.new("TextButton")
 	b.Size = UDim2.new(0, 130, 0, 30)
@@ -325,7 +309,7 @@ local Exec = createBtn("Execute", 0.02)
 local Clear = createBtn("Clear", 0.22)
 local Inject = createBtn("Inject", 0.42)
 
--- REMOTE SCANNER (FIXED)
+
 Inject.MouseButton1Click:Connect(function()
 	Logs.Text = Logs.Text .. "\n[SCANNING]: Fetching all RemoteEvents..."
 	local count = 0
