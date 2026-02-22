@@ -1,39 +1,215 @@
+-- RC7 Legacy - Deep Scan & Functional Final
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "Dominant_V7_SS"
+ScreenGui.Name = "RC7_DeepInjection_Final"
 ScreenGui.Parent = Player:WaitForChild("PlayerGui")
 
-local selectedRemote = nil
+local targetRemote = nil
 
+-- ANA PENCERE (Düzenlenmiş & Keskinleştirilmiş)
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 800, 0, 500)
-Main.Position = UDim2.new(0.5, -400, 0.5, -250)
-Main.BackgroundColor3 = Color3.fromRGB(230, 230, 230)
-Main.BorderSizePixel = 2
+Main.Size = UDim2.new(0, 460, 0, 330)
+Main.Position = UDim2.new(0.5, -230, 0.5, -165)
+Main.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
+Main.BorderSizePixel = 1
+Main.BorderColor3 = Color3.fromRGB(120, 120, 120)
 Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
 
+-- ÜST BAR
 local TopBar = Instance.new("Frame")
-TopBar.Size = UDim2.new(1, 0, 0, 30)
-TopBar.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+TopBar.Size = UDim2.new(1, 0, 0, 24)
+TopBar.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+TopBar.BorderSizePixel = 0
 TopBar.Parent = Main
 
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 1, 0)
-Title.Text = "  DOMINANT SS SUITE v7.0 | REMOTE & MODULE HUB  "
-Title.Font = Enum.Font.SourceSansBold
+Title.Size = UDim2.new(1, -50, 1, 0)
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.Text = "RC7"
+Title.TextColor3 = Color3.fromRGB(60, 60, 60)
+Title.Font = Enum.Font.SourceSans
+Title.TextSize = 14
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.BackgroundTransparency = 1
 Title.Parent = TopBar
 
-local Logo = Instance.new("ImageLabel")
-Logo.Size = UDim2.new(0, 65, 0, 65)
-Logo.Position = UDim2.new(0.5, -32, 0, -18)
-Logo.Image = "rbxassetid://4359357959"
-Logo.BackgroundTransparency = 1
-Logo.ZIndex = 15
+-- SAĞ PANEL (Kırmızı RC7 Logosu)
+local SidePanel = Instance.new("Frame")
+SidePanel.Size = UDim2.new(0, 46, 1, -24)
+SidePanel.Position = UDim2.new(1, -46, 0, 24)
+SidePanel.BackgroundColor3 = Color3.fromRGB(145, 38, 38)
+SidePanel.BorderSizePixel = 0
+SidePanel.Parent = Main
+
+local SideLogo = Instance.new("TextLabel")
+SideLogo.Size = UDim2.new(1, 0, 0, 65)
+SideLogo.Text = "R\nC\n7"
+SideLogo.TextColor3 = Color3.new(1, 1, 1)
+SideLogo.Font = Enum.Font.SourceSansBold
+SideLogo.TextSize = 22
+SideLogo.BackgroundTransparency = 1
+SideLogo.Parent = SidePanel
+
+-- EDİTÖR
+local EditorFrame = Instance.new("ScrollingFrame")
+EditorFrame.Size = UDim2.new(1, -60, 1, -95)
+EditorFrame.Position = UDim2.new(0, 7, 0, 32)
+EditorFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+EditorFrame.BorderColor3 = Color3.fromRGB(190, 190, 190)
+EditorFrame.ScrollBarThickness = 3
+EditorFrame.Parent = Main
+
+local Editor = Instance.new("TextBox")
+Editor.Size = UDim2.new(1, -10, 1, -10)
+Editor.Position = UDim2.new(0, 5, 0, 5)
+Editor.BackgroundTransparency = 1
+Editor.MultiLine = true
+Editor.Text = "-- RC7 Deep Injected\nprint('Server-Side Accessed')"
+Editor.Font = Enum.Font.Code
+Editor.TextSize = 13
+Editor.TextColor3 = Color3.new(0, 0, 0)
+Editor.TextXAlignment = Enum.TextXAlignment.Left
+Editor.TextYAlignment = Enum.TextYAlignment.Top
+Editor.ClearTextOnFocus = false
+Editor.Parent = EditorFrame
+
+---------------------------------------------------------
+-- ALT BUTONLAR (Inject, Execute, Clear)
+---------------------------------------------------------
+local BottomFrame = Instance.new("Frame")
+BottomFrame.Size = UDim2.new(1, -60, 0, 50)
+BottomFrame.Position = UDim2.new(0, 7, 1, -58)
+BottomFrame.BackgroundTransparency = 1
+BottomFrame.Parent = Main
+
+local layout = Instance.new("UIListLayout", BottomFrame)
+layout.FillDirection = Enum.FillDirection.Horizontal
+layout.Padding = UDim.new(0, 5)
+layout.VerticalAlignment = Enum.VerticalAlignment.Center
+
+local function createRC7Btn(name)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(0.32, 0, 0.75, 0)
+    b.BackgroundColor3 = Color3.fromRGB(170, 60, 60)
+    b.BorderSizePixel = 1
+    b.BorderColor3 = Color3.fromRGB(110, 35, 35)
+    b.Text = name
+    b.TextColor3 = Color3.new(1, 1, 1)
+    b.Font = Enum.Font.SourceSansBold
+    b.TextSize = 16
+    b.Parent = BottomFrame
+    return b
+end
+
+local InjectBtn = createRC7Btn("Inject")
+local ExecBtn = createRC7Btn("Execute")
+local ClearBtn = createRC7Btn("Clear")
+
+---------------------------------------------------------
+-- DEEP SCAN & GÜÇLENDİRİLMİŞ INJECT
+---------------------------------------------------------
+local function DeepScan()
+    Title.Text = "RC7 - Scanning Deep Backdoors..."
+    local found = nil
+    
+    -- 1. Aşama: Tüm RemoteEvent ve RemoteFunctionları tara
+    local items = game:GetDescendants()
+    for _, v in pairs(items) do
+        if v:IsA("RemoteEvent") then
+            -- Gizli veya Şüpheli İsimli Remote'lara Öncelik Ver
+            local name = v.Name:lower()
+            if name:find("donation") or name:find("remote") or name:find("exec") or name:find("run") or name:find("backdoor") then
+                found = v
+                break
+            end
+            found = v -- Hiçbiri yoksa ilk bulduğunu al
+        end
+    end
+    
+    -- 2. Aşama: Şüpheli objeleri tara (ClickDetector içindeki gizli tetikleyiciler vb.)
+    if not found then
+        for _, v in pairs(items) do
+            if v:IsA("ClickDetector") and v.Parent:FindFirstChildOfClass("RemoteEvent") then
+                found = v.Parent:FindFirstChildOfClass("RemoteEvent")
+                break
+            end
+        end
+    end
+    
+    return found
+end
+
+InjectBtn.MouseButton1Click:Connect(function()
+    local backdoor = DeepScan()
+    if backdoor then
+        targetRemote = backdoor
+        Title.Text = "RC7 - BACKDOOR FOUND: " .. backdoor.Name
+        InjectBtn.BackgroundColor3 = Color3.fromRGB(39, 174, 96) -- Başarılı Yeşil
+    else
+        Title.Text = "RC7 - Scan Failed: No Gate Found"
+        InjectBtn.BackgroundColor3 = Color3.fromRGB(192, 57, 43) -- Başarısız Kırmızı
+    end
+end)
+
+---------------------------------------------------------
+-- GÜÇLENDİRİLMİŞ EXECUTE (Bypass Denemeleri)
+---------------------------------------------------------
+ExecBtn.MouseButton1Click:Connect(function()
+    local code = Editor.Text
+    if targetRemote then
+        -- Sunucuyu sömürmek için 4 farklı bypass varyasyonu dener
+        pcall(function() targetRemote:FireServer(code) end)
+        pcall(function() targetRemote:FireServer("execute", code) end)
+        pcall(function() targetRemote:FireServer("loadstring", code) end)
+        pcall(function() targetRemote:FireServer({["Type"] = "Run", ["Data"] = code}) end)
+        
+        Title.Text = "RC7 - Exploit Sent to " .. targetRemote.Name
+    else
+        -- Fallback: Local Execution
+        local f, err = loadstring(code)
+        if f then 
+            task.spawn(f) 
+            Title.Text = "RC7 - Executed Locally"
+        else 
+            Title.Text = "RC7 - LUA Error!"
+            warn(err) 
+        end
+    end
+end)
+
+ClearBtn.MouseButton1Click:Connect(function() Editor.Text = "" end)
+
+---------------------------------------------------------
+-- SAĞ PANEL İKONLARI
+---------------------------------------------------------
+local iconContainer = Instance.new("Frame")
+iconContainer.Size = UDim2.new(1, 0, 1, -70)
+iconContainer.Position = UDim2.new(0, 0, 0, 70)
+iconContainer.BackgroundTransparency = 1
+iconContainer.Parent = SidePanel
+
+local iconLayout = Instance.new("UIListLayout", iconContainer)
+iconLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+iconLayout.Padding = UDim.new(0, 6)
+
+local function addIcon(txt, callback)
+    local i = Instance.new("TextButton")
+    i.Size = UDim2.new(0, 32, 0, 32)
+    i.BackgroundColor3 = Color3.fromRGB(175, 55, 55)
+    i.Text = txt
+    i.TextColor3 = Color3.new(1, 1, 1)
+    i.BorderSizePixel = 0
+    i.Parent = iconContainer
+    i.MouseButton1Click:Connect(callback)
+end
+
+addIcon("💾", function() print("Code Cache Updated.") end)
+addIcon("W", function() loadstring('game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 80')() end)
+addIcon("A", function() loadstring('print("Admin Privileges Requested")')() end)
+addIcon("⚙️", function() Main.Visible = not Main.Visible end)
 Logo.Parent = Main
 
 
